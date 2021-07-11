@@ -1,0 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+notebooks
+Dockerfile
+code/env
+code/__pycache__
