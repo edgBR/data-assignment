@@ -49,6 +49,6 @@ if __name__ == '__main__':
     parser.add_argument('--file_name', type=str, default=os.getenv('FILE_NAME', 'btc.csv'))
     parser.add_argument('--mode', type=str, default=os.getenv('MODE', 'all'))
     args, _ = parser.parse_known_args()
-    run_process(args.mode)
+    run_process()
 
 

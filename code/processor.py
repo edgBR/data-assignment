@@ -70,29 +70,3 @@ def conversor(df_in, columns_in, columns_out, conversion_ratio) -> pd.DataFrame:
     except Exception as e:
         raise e
     return df_in
-
-
-def buildLaggedFeatures(s,lag=365,dropna=False):
-    '''
-    Builds a new DataFrame to facilitate regressing over all possible lagged features
-    '''
-    if type(s) is pd.DataFrame:
-        new_dict={}
-        for col_name in s:
-            new_dict[col_name]=s[col_name]
-            # create lagged Series
-            new_dict['%s_lag%d' %(col_name,lag)]=s[col_name].shift(lag)
-
-        res=pd.DataFrame(new_dict,index=s.index)
-
-    elif type(s) is pd.Series:
-        the_range=range(lag+1)
-        res=pd.concat([s.shift(i) for i in the_range],axis=1)
-        res.columns=['lag_%d' %i for i in the_range]
-    else:
-        print 'Only works for DataFrame or Series'
-        return None
-    if dropna:
-        return res.dropna()
-    else:
-        return res
