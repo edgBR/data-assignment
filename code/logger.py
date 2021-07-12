@@ -3,7 +3,7 @@ import json
 import logging
 import logging.config
 
-default_path='../logging.json'
+default_path='./logging.json'
 default_level=logging.INFO
 env_key='LOG_CFG'
 
