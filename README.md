@@ -39,3 +39,25 @@ Example output:
 
 # Line chart
 Plot a line-graph (export as an image file) of the Bitcoin price in the past year.
+
+
+
+# Reproducibility instructions
+
+## Recreating python environment
+To run this code execute the following commands:
+
+```{python}
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt`
+```
+```{python}
+cd code
+python app.py
+```
+## Build Docker Image
+
+```
+docker build -t processing_image . --rm
+```
