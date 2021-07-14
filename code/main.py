@@ -37,6 +37,7 @@ def run_process():
         # PLOTTING DATA
         fig = px.line(converted_data, x=converted_data.index, y="price(EUR)")
         fig.write_html(f'{args.output_folder}/historical_price.html')
+        fig.write_image(f'{args.output_folder}/historical_price.png')
 
     except Exception as e:
         logging.error("Error while processing or plotting the data: " + str(e))
