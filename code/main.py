@@ -1,15 +1,14 @@
-import os
-import time
-from datetime import datetime
-import logging
 from logger import Logger
 from processor import *
+import os
+import logging
 import argparse
 import pandas as pd
 import numpy as np
 import plotly.express as px
 
 logging = Logger.getLogger(__name__)
+
 
 def run_process():
     try:
@@ -28,9 +27,9 @@ def run_process():
         converted_data.to_csv(f'{args.output_folder}/converted_data.csv')
         summary_input = converted_data[['generatedCoins', 'paymentCount', 'marketcap(EUR)', 'price(EUR)']]
         pivoted_summary_input = pd.melt(summary_input,
-                                         var_name='variable',
-                                         value_vars=['generatedCoins', 'paymentCount', 'marketcap(EUR)', 'price(EUR)'],
-                                         ignore_index=False)
+                                        var_name='variable',
+                                        value_vars=['generatedCoins', 'paymentCount', 'marketcap(EUR)', 'price(EUR)'],
+                                        ignore_index=False)
         summary_table = pivoted_summary_input.groupby('variable').agg([min, max, np.mean])
         summary_table.to_csv(f'{args.output_folder}/summary_data.csv')
 
@@ -38,10 +37,12 @@ def run_process():
         fig = px.line(converted_data, x=converted_data.index, y="price(EUR)")
         fig.write_html(f'{args.output_folder}/historical_price.html')
         fig.write_image(f'{args.output_folder}/historical_price.png')
+        logging.info('Process completed')
 
     except Exception as e:
         logging.error("Error while processing or plotting the data: " + str(e))
     return None
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -51,5 +52,3 @@ if __name__ == '__main__':
     parser.add_argument('--mode', type=str, default=os.getenv('MODE', 'all'))
     args, _ = parser.parse_known_args()
     run_process()
-
-

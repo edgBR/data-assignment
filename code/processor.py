@@ -1,7 +1,9 @@
-import pandas as pd
-pd.options.mode.chained_assignment = None  # false positive of copywarning
 from logger import Logger
+import pandas as pd
+pd.options.mode.chained_assignment = None  # false positive of copy warning
+
 logging = Logger.getLogger(__name__)
+
 
 def lag_processor(df_in, target_columns, lag=365, drop_nans=True) -> pd.DataFrame:
     """
@@ -14,8 +16,8 @@ def lag_processor(df_in, target_columns, lag=365, drop_nans=True) -> pd.DataFram
         Input dataframe
     target_columns : list
         A list containing the target columns that will be lagged
-    lags: int
-        An integer containing the lookback for calculating the previous data
+    lag: int
+        An integer containing the look back for calculating the previous data
     drop_nans: bool
         A boolean specifying if we drop the nans of the dataset or not
 
@@ -34,14 +36,15 @@ def lag_processor(df_in, target_columns, lag=365, drop_nans=True) -> pd.DataFram
         if drop_nans:
             df_out = df_out.dropna()
         else:
-            df_out
+            df_out = df_out
         logging.info(f'Successfully lagged {target_columns}')
     except Exception as e:
         raise e
     return df_out
 
-def summary_output(df_in):
-    return
+
+# def summary_output(df_in):
+#    return
 
 def conversor(df_in, columns_in, columns_out, conversion_ratio) -> pd.DataFrame:
     """
@@ -56,7 +59,7 @@ def conversor(df_in, columns_in, columns_out, conversion_ratio) -> pd.DataFrame:
         A list containing the columns that will be converted to EURO
     columns_out : list
         A list containing the name of the output columns after the conversion
-    conversion_ratio : int
+    conversion_ratio : float
         An integer with the value of the conversion ratio
 
     Returns
@@ -66,7 +69,7 @@ def conversor(df_in, columns_in, columns_out, conversion_ratio) -> pd.DataFrame:
     """
     try:
         df_in[columns_out] = df_in[columns_in] * conversion_ratio
-        #logging.info(f'Successfully converted {columns_in} to EURO')
+        # logging.info(f'Successfully converted {columns_in} to EURO')
     except Exception as e:
         raise e
     return df_in
